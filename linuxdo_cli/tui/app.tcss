@@ -1,61 +1,496 @@
-/* ── Global ──────────────────────────────────────────────────────── */
+/* ── Global Styles ────────────────────────────────────────────────── */
+
 Screen {
     background: $background;
+    color: $foreground;
 }
 
-/* ── CategoryTabs ────────────────────────────────────────────────── */
-CategoryTabs .tab-item.-active {
+/* ── Modals ──────────────────────────────────────────────────────── */
+HelpScreen, CategorySelectScreen, ThemeSelectScreen {
+    align: center middle;
+    background: $background 80%;
+}
+
+/* 统一模态框容器样式 */
+#help-container, #cat-card-panel, #theme-select-container {
+    background: $surface;
+    border: thick $primary;
+    width: 60;
+    max-width: 92%;
+    height: auto;
+    max-height: 85%;
+}
+
+#help-container {
+    padding: 2 4;
+}
+
+#help-content {
+    width: 100%;
+    height: auto;
+}
+
+#theme-select-container {
+    padding: 1 2;
+}
+
+#theme-select-title {
+    text-align: center;
+    width: 100%;
+    text-style: bold;
+    color: $primary;
+    margin-bottom: 1;
+}
+
+#theme-option-list {
+    background: transparent;
+    border: none;
+    height: auto;
+    max-height: 12;
+}
+
+#theme-select-footer {
+    margin-top: 1;
+    text-align: center;
+    width: 100%;
+}
+
+/* ── Category Tabs ─────────────────────────────────────────────────── */
+CategoryTabs {
+    dock: top;
+    layout: horizontal;
+    background: $surface;
+    height: 3;
+    width: 100%;
+    border-bottom: tall $boost;
+    padding: 0 1;
+}
+
+#brand-logo {
+    width: 14;
+    height: 1;
+    margin: 1 1;
+    background: $primary;
+    color: $background;
+    text-style: bold;
+    content-align: center middle;
+}
+
+#tabs-container {
+    width: 1fr;
+    height: 3;
+    content-align: left middle;
+}
+
+.tab-item {
+    padding: 0 2;
+    height: 1;
+    margin: 1 0;
+    color: $foreground 60%;
+    text-style: dim;
+}
+
+.tab-item:hover {
     color: $primary;
     text-style: bold;
+    background: $boost;
 }
 
-CategoryTabs .tab-item {
+.tab-item.-active {
+    color: $primary;
+    text-style: bold underline;
+    background: $boost 50%;
+}
+
+.-viewport-medium CategoryTabs {
+    padding: 0;
+}
+
+.-viewport-medium #brand-logo {
+    width: 10;
+    margin: 1 0;
+}
+
+.-viewport-medium .tab-item {
+    padding: 0 1;
+}
+
+.-viewport-narrow CategoryTabs {
+    padding: 0;
+}
+
+.-viewport-narrow #brand-logo {
+    display: none;
+}
+
+.-viewport-narrow .tab-item {
+    padding: 0 1;
+}
+
+/* ── Topic List ───────────────────────────────────────────────────── */
+TopicList {
+    background: transparent;
+    height: 1fr;
+    width: 100%;
+    scrollbar-gutter: stable;
+    padding: 0 1;
+}
+
+TopicList > .list-view--highlighted {
+    background: transparent;
+}
+
+/* ── Topic Item ───────────────────────────────────────────────────── */
+TopicItem {
+    padding: 1 2;
+    margin: 0 1;
+    height: auto;
+    background: transparent;
+    border-bottom: solid $boost 10%;
+}
+
+TopicItem:hover {
+    background: $boost 30%;
+}
+
+TopicItem.-selected {
+    background: $boost 60%;
+    border-left: thick $primary;
+    padding-left: 1;
+}
+
+.topic-title {
+    width: 100%;
+    height: auto;
+    text-style: bold;
+    color: $foreground;
+    margin-bottom: 0;
+}
+
+.topic-meta-row {
+    width: 100%;
+    height: 1;
+    margin-top: 0;
+}
+
+.meta-category {
+    color: $secondary;
+    text-style: bold;
+    margin-right: 1;
+}
+
+.meta-author {
+    color: $accent;
+    margin-right: 1;
+}
+
+.meta-replies, .meta-views, .meta-time {
     color: $text-muted;
+    margin-right: 1;
+    text-style: dim;
 }
 
-/* ── TopicList ───────────────────────────────────────────────────── */
-TopicItem .topic-title.-selected {
-    text-style: bold reverse;
+.-viewport-medium TopicItem {
+    padding: 0 1;
+    margin: 0;
 }
 
-TopicItem .topic-title.-transitioning {
-    color: $text-disabled;
-    text-style: italic;
+.-viewport-medium .meta-views,
+.-viewport-medium .meta-time {
+    display: none;
 }
 
-TopicItem .topic-meta {
-    color: $text-disabled;
+.-viewport-narrow TopicItem {
+    padding: 0 1;
+    margin: 0;
 }
 
-/* ── StatusBar ───────────────────────────────────────────────────── */
+.-viewport-narrow .topic-meta-row {
+    display: none;
+}
+
+.-viewport-narrow .topic-title {
+    height: 1;
+}
+
+/* ── Status Bar ────────────────────────────────────────────────────── */
 StatusBar {
     dock: bottom;
     height: 1;
     background: $surface;
+    color: $foreground;
+    width: 100%;
+}
+
+StatusBar Horizontal {
+    width: 100%;
+    height: 1fr;
+}
+
+.status-item {
     padding: 0 1;
+    background: $boost;
+    color: $foreground;
+    text-style: dim;
 }
 
-/* ── PostView ────────────────────────────────────────────────────── */
-PostView {
-    border-bottom: dashed $surface-lighten-1;
-    padding: 1 2;
-}
-
-.post-meta {
-    color: $accent;
-    text-style: bold;
-}
-
-/* ── DetailScreen ────────────────────────────────────────────────── */
-#detail-title {
-    dock: top;
-    height: 1;
-    background: $surface;
+#spinner {
+    width: 3;
     color: $primary;
     text-style: bold;
+    background: $surface;
+}
+
+.main-msg {
+    width: 1fr;
+    background: $surface;
+    color: $foreground;
+    text-style: none;
+}
+
+#theme-label {
+    background: $primary;
+    color: $background;
+    text-style: bold;
+}
+
+#density-label {
+    background: $secondary;
+    color: $background;
+    text-style: bold;
+}
+
+.-viewport-medium #density-label {
+    display: none;
+}
+
+.-viewport-narrow #theme-label,
+.-viewport-narrow #density-label {
+    display: none;
+}
+
+.-viewport-narrow #spinner {
+    width: 1;
+    padding: 0;
+}
+
+/* ── Compact Mode Overrides ────────────────────────────────────────── */
+.-compact TopicItem {
+    padding: 0 2;
+}
+
+.-compact .topic-meta-row {
+    display: none;
+}
+
+.-compact .topic-title {
+    height: 1;
+}
+
+/* ── Detail Screen ─────────────────────────────────────────────────── */
+#detail-header {
+    dock: top;
+    height: 3;
+    background: $surface;
+    border-bottom: tall $boost;
+    width: 100%;
     padding: 0 1;
+}
+
+#detail-back-btn {
+    width: 12;
+    height: 1;
+    margin: 1 1;
+    background: $boost;
+    color: $foreground;
+    border: none;
+    text-style: bold;
+}
+
+#detail-back-btn:hover {
+    background: $primary;
+    color: $background;
+}
+
+#detail-title {
+    width: 1fr;
+    height: 1;
+    margin: 1 1;
+    text-style: bold;
+    color: $primary;
+    content-align: center middle;
+}
+
+.-viewport-medium #detail-back-btn {
+    width: 8;
+    margin: 1 0;
+}
+
+.-viewport-medium #detail-title {
+    content-align: left middle;
+}
+
+.-viewport-narrow #detail-header {
+    padding: 0;
+}
+
+.-viewport-narrow #detail-back-btn {
+    width: 3;
+    margin: 1 0 1 1;
+}
+
+.-viewport-narrow #detail-title {
+    margin: 1 1 1 0;
+    content-align: left middle;
 }
 
 #posts-container {
     height: 1fr;
+    width: 100%;
+    background: transparent;
+    padding: 0 1;
+}
+
+.-viewport-narrow #posts-container {
+    padding: 0;
+}
+
+/* ── Post View ─────────────────────────────────────────────────────── */
+PostView {
+    height: auto;
+    width: 100%;
+    margin-bottom: 1;
+    background: $surface 20%;
+    border-left: solid $boost;
+    padding: 1 2;
+}
+
+.-viewport-medium PostView {
+    padding: 1 1;
+}
+
+.-viewport-narrow PostView {
+    border-left: none;
+    padding: 0 1;
+}
+
+
+PostView Markdown {
+    height: auto;
+    width: 100%;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Category Card Panel (Rewritten for Dialog-Style) ────────── */
+#cat-card-panel {
+    width: 62;
+    height: 80%;
+    max-height: 30;
+    padding: 0;
+    margin: 0;
+    layout: vertical;
+}
+
+#cat-card-title {
+    width: 100%;
+    height: 3;
+    content-align: center middle;
+    background: $primary;
+    color: $background;
+    text-style: bold;
+    padding: 0;
+}
+
+#cat-card-search {
+    border: none;
+    background: $boost;
+    margin: 1 1 0 1;
+    height: 3;
+    padding: 0 1;
+}
+
+#cat-card-search:focus {
+    border: none;
+}
+
+#cat-card-list {
+    background: transparent;
+    border: none;
+    height: 1fr;
+    margin: 1 1;
+    padding: 0;
+}
+
+#cat-card-list > .option-list--option-highlighted {
+    background: $primary;
+    color: $background;
+}
+
+#cat-card-footer {
+    width: 100%;
+    content-align: center middle;
+    color: $text-muted;
+    text-style: dim;
+    padding: 1;
+    border-top: dashed $boost;
+}
+
+.-viewport-medium #help-container,
+.-viewport-medium #theme-select-container,
+.-viewport-medium #cat-card-panel {
+    width: 54;
+    max-width: 94%;
+}
+
+.-viewport-medium #theme-option-list {
+    max-height: 10;
+}
+
+.-viewport-medium #cat-card-title {
+    height: 2;
+}
+
+.-viewport-medium #cat-card-search {
+    height: 2;
+    margin: 1 1 0 1;
+}
+
+.-viewport-narrow #help-container,
+.-viewport-narrow #theme-select-container,
+.-viewport-narrow #cat-card-panel {
+    width: 92%;
+    max-width: 92%;
+}
+
+.-viewport-narrow #help-container {
+    padding: 1 2;
+}
+
+.-viewport-narrow #theme-select-container {
+    padding: 1;
+}
+
+.-viewport-narrow #theme-option-list {
+    max-height: 8;
+}
+
+.-viewport-narrow #theme-select-footer,
+.-viewport-narrow #cat-card-footer {
+    display: none;
+}
+
+.-viewport-narrow #cat-card-panel {
+    height: 75%;
+    max-height: 22;
+}
+
+.-viewport-narrow #cat-card-title {
+    height: 1;
+}
+
+.-viewport-narrow #cat-card-search {
+    margin: 0 1;
+    height: 1;
 }

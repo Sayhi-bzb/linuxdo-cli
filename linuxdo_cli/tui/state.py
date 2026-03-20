@@ -14,7 +14,11 @@ class BrowseState:
     view_state: ViewState = ViewState.STARTUP
     topics: list = field(default_factory=list)
     current_page: int = 0
-    cursor_index: int = 0
     current_category: str = "latest"
-    is_transitioning: bool = False  # 切换时保留旧数据（防闪烁）
-    fetch_generation: int = 0       # 防竞态计数器
+    fetch_generation: int = 0  # 防竞态计数器
+    has_more: bool = True       # False = 已到最后一页，停止追加
+    is_appending: bool = False  # True = 追加请求进行中（防重入）
+    # 分类 Tab 专用字段（current_category == "category" 时生效）
+    category_slug: str = ""
+    category_id: int = 0
+    category_name: str = ""

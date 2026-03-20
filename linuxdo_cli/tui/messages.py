@@ -1,17 +1,17 @@
 from textual.message import Message
-from typing import List, Any
+
+from ..services import FetchTopicsResult, TopicDetailResult, TopicPostsPageResult
 
 
 class TopicsFetched(Message):
-    """话题列表加载完成"""
-    def __init__(self, topics: list, generation: int) -> None:
+    def __init__(self, result: FetchTopicsResult, generation: int, is_append: bool = False) -> None:
         super().__init__()
-        self.topics = topics
+        self.result = result
         self.generation = generation
+        self.is_append = is_append
 
 
 class FetchFailed(Message):
-    """话题列表加载失败"""
     def __init__(self, error: str, generation: int) -> None:
         super().__init__()
         self.error = error
@@ -19,14 +19,20 @@ class FetchFailed(Message):
 
 
 class DetailLoaded(Message):
-    """话题详情加载完成"""
-    def __init__(self, detail: Any) -> None:
+    def __init__(self, result: TopicDetailResult, is_append: bool = False) -> None:
         super().__init__()
-        self.detail = detail
+        self.result = result
+        self.is_append = is_append
+
+
+class DetailPostsAppended(Message):
+    def __init__(self, result: TopicPostsPageResult) -> None:
+        super().__init__()
+        self.result = result
 
 
 class DetailFailed(Message):
-    """话题详情加载失败"""
-    def __init__(self, error: str) -> None:
+    def __init__(self, error: str, is_append: bool = False) -> None:
         super().__init__()
         self.error = error
+        self.is_append = is_append

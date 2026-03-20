@@ -1,43 +1,31 @@
 from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.widgets import Markdown, Label
-from rich.text import Text
-from ..theme import COLORS
 from ...utils.converter import html_to_md
 
 
 class PostView(Widget):
     """单篇帖子渲染"""
 
-    DEFAULT_CSS = """
-    PostView {
-        border-bottom: dashed $surface-lighten-1;
-        padding: 1 2;
-    }
-    PostView .post-meta {
-        color: $accent;
-        text-style: bold;
-        margin-bottom: 1;
-    }
-    """
-
     def __init__(self, post: dict) -> None:
         super().__init__()
         self.post = post
 
-    def compose(self) -> ComposeResult:
-        post = self.post
         author = post.get("display_username") or post.get("username", "?")
         created_at = post.get("created_at", "")
+        if created_at and "T" in created_at:
+            try:
+                from datetime import datetime
+                dt = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+                created_at = dt.strftime("%Y-%m-%d %H:%M")
+            except Exception:
+                pass
+
         cooked = post.get("cooked", "")
-        md_content = html_to_md(cooked)
+        body = html_to_md(cooked)
+        # 把 meta 行作为 markdown 的第一行（用 blockquote 样式区分）
+        meta_line = f"**@{author}**  *{created_at}*"
+        self._md_content = f"{meta_line}\n\n{body}" if body else meta_line
 
-        meta = Text()
-        meta.append(f"@{author}", style=COLORS["post_author"])
-        meta.append(f"  {created_at}", style="dim")
-
-        yield Label(meta, classes="post-meta")
-        if md_content:
-            yield Markdown(md_content)
-        else:
-            yield Label("[dim](空内容)[/dim]")
+    def compose(self) -> ComposeResult:
+        yield Markdown(self._md_content)

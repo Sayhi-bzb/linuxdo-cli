@@ -2,6 +2,14 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
 
+
+class Category(BaseModel):
+    id: int
+    name: str
+    slug: str
+    topic_count: int = 0
+    parent_category_id: Optional[int] = None
+
 class Topic(BaseModel):
     id: int
     title: str
@@ -37,6 +45,16 @@ class TopicList(BaseModel):
 
 class LatestTopicsResponse(BaseModel):
     topic_list: TopicList
+
+
+class UserProfile(BaseModel):
+    id: int
+    username: str
+    name: Optional[str] = None
+    trust_level: int = 0
+    active: bool = False
+    silenced: bool = False
+
 
 class TopicDetail(BaseModel):
     id: int

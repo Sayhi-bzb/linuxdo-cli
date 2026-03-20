@@ -1,7 +1,3 @@
-from .status_bar import StatusBar
-from .topic_item import TopicItem
-from .topic_list import TopicList
-from .category_tabs import CategoryTabs
-from .post_view import PostView
+from .posts_container import PostsContainer
 
-__all__ = ["StatusBar", "TopicItem", "TopicList", "CategoryTabs", "PostView"]
+__all__ = ["PostsContainer"]

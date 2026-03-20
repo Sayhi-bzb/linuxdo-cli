@@ -1,38 +1,34 @@
 from textual.app import ComposeResult
 from textual.widgets import ListItem, Label
+from textual.containers import Horizontal
 from rich.text import Text
-from ..theme import COLORS
 
 
 class TopicItem(ListItem):
     """单个话题行"""
 
-    def __init__(self, topic, is_transitioning: bool = False) -> None:
+    def __init__(self, topic, is_transitioning: bool = False, category_map: dict | None = None) -> None:
         super().__init__()
         self.topic = topic
         self.is_transitioning = is_transitioning
+        self._category_map: dict = category_map or {}
 
     def compose(self) -> ComposeResult:
         t = self.topic
 
-        # 构造标题文本
+        # 标题行
         title_text = Text()
         if t.pinned or t.pinned_globally:
-            title_text.append("📌 ", style=COLORS["title_pinned"])
-        if t.closed:
-            title_text.append(t.title, style=COLORS["title_closed"])
-        else:
-            style = "dim" if self.is_transitioning else ""
-            title_text.append(t.title, style=style)
-
-        # 构造元信息
-        last_posted = t.last_posted_at.strftime("%m-%d %H:%M")
-        meta_text = Text()
-        meta_text.append(f"@{t.last_poster_username}", style=COLORS["meta_author"])
-        meta_text.append("  ")
-        meta_text.append(f"💬 {t.reply_count}", style=COLORS["meta_replies"])
-        meta_text.append(f"  👁 {t.views}  ")
-        meta_text.append(last_posted, style="dim")
-
+            title_text.append("◆ ", style="bold #ffba00")
+        title_text.append(t.title, style="dim" if (self.is_transitioning or t.closed) else "")
         yield Label(title_text, classes="topic-title")
-        yield Label(meta_text, classes="topic-meta")
+
+        # 元信息行
+        with Horizontal(classes="topic-meta-row"):
+            cat = self._category_map.get(t.category_id)
+            if cat:
+                yield Label(f"[{cat.name}]", classes="meta-category")
+            yield Label(f"@{t.last_poster_username}", classes="meta-author")
+            yield Label(f" » {t.reply_count}", classes="meta-replies")
+            yield Label(f" ○ {t.views}", classes="meta-views")
+            yield Label(f" τ {t.last_posted_at.strftime('%m-%d %H:%M')}", classes="meta-time")
