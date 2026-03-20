@@ -61,11 +61,4 @@ local_settings.py
 # Database
 *.db
 *.sqlite3
-
-# GitNexus index
 .gitnexus
-
-# OAuth 凭据（不纳入版本控制）
-src/linuxdo_cli/_credentials.py
-
-.claude
