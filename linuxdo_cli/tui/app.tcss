@@ -1,0 +1,61 @@
+/* ── Global ──────────────────────────────────────────────────────── */
+Screen {
+    background: $background;
+}
+
+/* ── CategoryTabs ────────────────────────────────────────────────── */
+CategoryTabs .tab-item.-active {
+    color: $primary;
+    text-style: bold;
+}
+
+CategoryTabs .tab-item {
+    color: $text-muted;
+}
+
+/* ── TopicList ───────────────────────────────────────────────────── */
+TopicItem .topic-title.-selected {
+    text-style: bold reverse;
+}
+
+TopicItem .topic-title.-transitioning {
+    color: $text-disabled;
+    text-style: italic;
+}
+
+TopicItem .topic-meta {
+    color: $text-disabled;
+}
+
+/* ── StatusBar ───────────────────────────────────────────────────── */
+StatusBar {
+    dock: bottom;
+    height: 1;
+    background: $surface;
+    padding: 0 1;
+}
+
+/* ── PostView ────────────────────────────────────────────────────── */
+PostView {
+    border-bottom: dashed $surface-lighten-1;
+    padding: 1 2;
+}
+
+.post-meta {
+    color: $accent;
+    text-style: bold;
+}
+
+/* ── DetailScreen ────────────────────────────────────────────────── */
+#detail-title {
+    dock: top;
+    height: 1;
+    background: $surface;
+    color: $primary;
+    text-style: bold;
+    padding: 0 1;
+}
+
+#posts-container {
+    height: 1fr;
+}
