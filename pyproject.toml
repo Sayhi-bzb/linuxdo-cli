@@ -22,8 +22,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USERNAME/linuxdo-cli"
-Repository = "https://github.com/YOUR_USERNAME/linuxdo-cli"
+Homepage = "https://github.com/Sayhi-bzb/linuxdo-cli"
+Repository = "https://github.com/Sayhi-bzb/linuxdo-cli"
 
 [project.scripts]
 linuxdo = "linuxdo_cli.main:app"
